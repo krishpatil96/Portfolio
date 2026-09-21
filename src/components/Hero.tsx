@@ -1,0 +1,321 @@
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  ArrowRight,
+  FileDown,
+  Mail,
+  Github,
+  Linkedin,
+  Sparkles,
+  MapPin,
+  GraduationCap,
+  Terminal,
+  Camera,
+} from 'lucide-react';
+import { personalInfo, heroCodeSnippets } from '../data/portfolio';
+
+interface HeroProps {
+  onOpenResumeModal: () => void;
+}
+
+export const Hero: React.FC<HeroProps> = ({ onOpenResumeModal }) => {
+  // Profile Photo state: checks localStorage, then personalInfo.profileImage, then fallback
+  const [profileImgSrc, setProfileImgSrc] = useState<string>(() => {
+    return (
+      localStorage.getItem('krish_portfolio_avatar') ||
+      personalInfo.profileImage ||
+      '/portfolio.jpeg'
+    );
+  });
+  const [imageError, setImageError] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setImageError(false);
+  }, [profileImgSrc]);
+
+  // Handle direct file selection
+  const handlePhotoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const result = event.target?.result as string;
+        if (result) {
+          setProfileImgSrc(result);
+          setImageError(false);
+          try {
+            localStorage.setItem('krish_portfolio_avatar', result);
+          } catch {
+            // Storage quota limit fallback
+          }
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Handle drag and drop of photo file
+  const handlePhotoDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const result = event.target?.result as string;
+        if (result) {
+          setProfileImgSrc(result);
+          setImageError(false);
+          try {
+            localStorage.setItem('krish_portfolio_avatar', result);
+          } catch {
+            // Ignore
+          }
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  return (
+    <section
+      id="home"
+      className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
+    >
+      {/* Subtle Background Glow Elements */}
+      <div
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-cyan-600/10 rounded-full blur-3xl pointer-events-none -z-10"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute bottom-10 right-10 w-[380px] h-[380px] bg-blue-600/10 rounded-full blur-3xl pointer-events-none -z-10"
+        aria-hidden="true"
+      />
+
+      {/* Floating Animated Code Snippets in Background */}
+      <div
+        className="absolute inset-0 overflow-hidden pointer-events-none -z-10 select-none hidden md:block"
+        aria-hidden="true"
+      >
+        <div className="absolute top-36 left-[8%] px-3.5 py-1.5 rounded-lg bg-slate-900/60 border border-slate-800/80 font-mono text-xs text-cyan-400/70 backdrop-blur-sm shadow-sm animate-pulse">
+          <code>{heroCodeSnippets[0]}</code>
+        </div>
+        <div className="absolute top-48 right-[10%] px-3.5 py-1.5 rounded-lg bg-slate-900/60 border border-slate-800/80 font-mono text-xs text-blue-400/70 backdrop-blur-sm shadow-sm">
+          <code>{heroCodeSnippets[1]}</code>
+        </div>
+        <div className="absolute bottom-32 left-[12%] px-3.5 py-1.5 rounded-lg bg-slate-900/60 border border-slate-800/80 font-mono text-xs text-emerald-400/70 backdrop-blur-sm shadow-sm">
+          <code>{heroCodeSnippets[2]}</code>
+        </div>
+        <div className="absolute bottom-28 right-[14%] px-3.5 py-1.5 rounded-lg bg-slate-900/60 border border-slate-800/80 font-mono text-xs text-violet-400/70 backdrop-blur-sm shadow-sm">
+          <code>{heroCodeSnippets[3]}</code>
+        </div>
+      </div>
+
+      <div className="max-w-5xl mx-auto w-full flex flex-col items-center text-center">
+        {/* Status Badge */}
+        <div
+          id="hero-status-badge"
+          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-300 text-xs font-semibold mb-6 shadow-sm shadow-cyan-950/30"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+          </span>
+          <span>{personalInfo.statusBadge}</span>
+        </div>
+
+        {/* Profile Avatar with Subtle Tech Glow */}
+        <div
+          id="hero-profile-avatar-container"
+          className="relative mb-6 group cursor-pointer"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={handlePhotoDrop}
+          onClick={() => fileInputRef.current?.click()}
+          title="Profile photo: Krish Patil (Click or drop photo to update)"
+        >
+          {/* Hidden File Input for quick photo select */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            id="profile-photo-file-input"
+            accept="image/*"
+            onChange={handlePhotoSelect}
+            className="hidden"
+            aria-label="Upload profile photo"
+          />
+
+          {/* Glowing Gradient Border Container */}
+          <div className="w-36 h-36 sm:w-44 sm:h-44 md:w-48 md:h-48 rounded-full p-[3px] bg-gradient-to-tr from-cyan-500 via-blue-500 to-indigo-500 shadow-[0_0_30px_rgba(6,182,212,0.35)] group-hover:shadow-[0_0_45px_rgba(6,182,212,0.55)] transition-all duration-300 group-hover:scale-105">
+            {/* Inner Dark Rim & Ring */}
+            <div className="w-full h-full rounded-full bg-[#0b0f19] p-[2px] flex items-center justify-center overflow-hidden relative ring-1 ring-cyan-400/30">
+              {/* Selected Target Element: Circular Profile Container */}
+              <div className="w-full h-full rounded-full overflow-hidden relative bg-slate-950">
+                {!imageError ? (
+                  <img
+                    id="hero-profile-img"
+                    src={profileImgSrc}
+                    alt={`${personalInfo.name} - Profile Photo`}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full rounded-full object-cover object-[52%_22%] transition-transform duration-500 group-hover:scale-105"
+                    onError={() => {
+                      if (profileImgSrc === '/portfolio.jpeg') {
+                        setProfileImgSrc('portfolio.jpeg');
+                      } else {
+                        setImageError(true);
+                      }
+                    }}
+                  />
+                ) : (
+                  /* Fallback when image source not yet placed on disk */
+                  <div className="w-full h-full rounded-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 flex flex-col items-center justify-center text-slate-100 p-2">
+                    <span className="font-extrabold text-3xl sm:text-4xl tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-400">
+                      KP
+                    </span>
+                    <span className="text-[10px] font-mono text-cyan-300 mt-1 flex items-center gap-1 bg-cyan-950/80 px-2.5 py-0.5 rounded-full border border-cyan-700/50">
+                      <Camera className="w-3 h-3" />
+                      <span>Select Photo</span>
+                    </span>
+                  </div>
+                )}
+
+                {/* Subtle Hover Overlay for Quick Update */}
+                <div
+                  className={`absolute inset-0 rounded-full bg-slate-950/65 backdrop-blur-[2px] flex flex-col items-center justify-center transition-opacity duration-200 ${
+                    isHovered ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                  }`}
+                >
+                  <Camera className="w-6 h-6 text-cyan-300 mb-1 drop-shadow-md" />
+                  <span className="text-[10px] font-mono text-cyan-200 tracking-wider font-semibold">
+                    Change Photo
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Accent Sparkle Tech Badge */}
+          <div
+            className="absolute -bottom-1 -right-1 bg-slate-900/95 border border-cyan-500/50 rounded-full p-2 shadow-lg shadow-cyan-950/80 group-hover:border-cyan-400 group-hover:scale-110 transition-all duration-200"
+            title="AI/ML Developer Profile"
+          >
+            <Sparkles className="w-4 h-4 text-cyan-400 animate-pulse" />
+          </div>
+        </div>
+
+        {/* Main Heading */}
+        <h1
+          id="hero-heading"
+          className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white mb-4 leading-tight"
+        >
+          Hi, I'm{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-400">
+            {personalInfo.name}
+          </span>
+        </h1>
+
+        {/* Subtitle */}
+        <h2
+          id="hero-subtitle"
+          className="text-lg sm:text-xl md:text-2xl font-medium text-slate-200 mb-6 max-w-3xl leading-relaxed"
+        >
+          {personalInfo.title}
+        </h2>
+
+        {/* Short Introduction */}
+        <p
+          id="hero-intro"
+          className="text-base sm:text-lg text-slate-300/90 max-w-2xl mb-8 leading-relaxed font-normal"
+        >
+          {personalInfo.bio}
+        </p>
+
+        {/* University & Location Chips */}
+        <div className="flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm text-slate-300 mb-9 font-medium">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900/70 border border-slate-800">
+            <GraduationCap className="w-4 h-4 text-cyan-400" />
+            <span>{personalInfo.university} (SOET)</span>
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900/70 border border-slate-800">
+            <Terminal className="w-4 h-4 text-blue-400" />
+            <span>CGPA: {personalInfo.cgpa} ({personalInfo.currentYear})</span>
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900/70 border border-slate-800">
+            <MapPin className="w-4 h-4 text-rose-400" />
+            <span>{personalInfo.location}</span>
+          </span>
+        </div>
+
+        {/* Call To Action Buttons */}
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-10">
+          <a
+            href="#projects"
+            id="hero-view-projects-btn"
+            className="flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-lg shadow-cyan-500/25 transition-all duration-200 active:scale-95 focus:outline-none focus:ring-2 focus:ring-cyan-300"
+          >
+            <span>View My Projects</span>
+            <ArrowRight className="w-4 h-4" />
+          </a>
+
+          <button
+            id="hero-download-resume-btn"
+            onClick={onOpenResumeModal}
+            className="flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm bg-slate-900/90 hover:bg-slate-800 text-slate-100 border border-slate-700/80 shadow-md transition-all duration-200 active:scale-95 cursor-pointer focus:outline-none focus:ring-2 focus:ring-slate-400"
+          >
+            <FileDown className="w-4 h-4 text-cyan-400" />
+            <span>Download Resume</span>
+          </button>
+
+          <a
+            href="#contact"
+            id="hero-lets-connect-btn"
+            className="flex items-center gap-2 px-5 py-3.5 rounded-xl font-medium text-sm text-slate-300 hover:text-white hover:bg-slate-800/40 border border-transparent hover:border-slate-800 transition-all duration-200"
+          >
+            <Mail className="w-4 h-4 text-slate-400" />
+            <span>Let's Connect</span>
+          </a>
+        </div>
+
+        {/* Social Links */}
+        <div className="flex items-center gap-4">
+          <span className="text-xs font-mono uppercase tracking-wider text-slate-400">
+            Profiles
+          </span>
+          <div className="h-4 w-px bg-slate-800" />
+
+          <a
+            href={personalInfo.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            id="hero-social-github"
+            aria-label="Krish Patil GitHub Profile"
+            className="p-2.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 hover:border-cyan-500/50 text-slate-300 hover:text-white transition-all shadow-sm"
+          >
+            <Github className="w-5 h-5" />
+          </a>
+
+          <a
+            href={personalInfo.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            id="hero-social-linkedin"
+            aria-label="Krish Patil LinkedIn Profile (Configurable)"
+            title="LinkedIn profile URL (Editable in src/data/portfolio.ts)"
+            className="p-2.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 hover:border-blue-500/50 text-slate-300 hover:text-white transition-all shadow-sm relative group"
+          >
+            <Linkedin className="w-5 h-5 text-blue-400" />
+          </a>
+
+          <a
+            href={`mailto:${personalInfo.email}`}
+            id="hero-social-email"
+            aria-label="Email Krish Patil"
+            className="p-2.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 hover:border-cyan-500/50 text-slate-300 hover:text-white transition-all shadow-sm"
+          >
+            <Mail className="w-5 h-5 text-cyan-400" />
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+};
