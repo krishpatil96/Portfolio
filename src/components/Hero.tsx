@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import {
   ArrowRight,
   FileDown,
@@ -9,7 +9,6 @@ import {
   MapPin,
   GraduationCap,
   Terminal,
-  Camera,
 } from 'lucide-react';
 import { personalInfo, heroCodeSnippets } from '../data/portfolio';
 
@@ -18,64 +17,6 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ onOpenResumeModal }) => {
-  // Profile Photo state: checks localStorage, then personalInfo.profileImage, then fallback
-  const [profileImgSrc, setProfileImgSrc] = useState<string>(() => {
-    return (
-      localStorage.getItem('krish_portfolio_avatar') ||
-      personalInfo.profileImage ||
-      '/portfolio.jpeg'
-    );
-  });
-  const [imageError, setImageError] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    setImageError(false);
-  }, [profileImgSrc]);
-
-  // Handle direct file selection
-  const handlePhotoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const result = event.target?.result as string;
-        if (result) {
-          setProfileImgSrc(result);
-          setImageError(false);
-          try {
-            localStorage.setItem('krish_portfolio_avatar', result);
-          } catch {
-            // Storage quota limit fallback
-          }
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  // Handle drag and drop of photo file
-  const handlePhotoDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files?.[0];
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const result = event.target?.result as string;
-        if (result) {
-          setProfileImgSrc(result);
-          setImageError(false);
-          try {
-            localStorage.setItem('krish_portfolio_avatar', result);
-          } catch {
-            // Ignore
-          }
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
   return (
     <section
       id="home"
@@ -126,80 +67,31 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResumeModal }) => {
         {/* Profile Avatar with Subtle Tech Glow */}
         <div
           id="hero-profile-avatar-container"
-          className="relative mb-6 group cursor-pointer"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={handlePhotoDrop}
-          onClick={() => fileInputRef.current?.click()}
-          title="Profile photo: Krish Patil (Click or drop photo to update)"
+          className="relative mb-6 select-none"
         >
-          {/* Hidden File Input for quick photo select */}
-          <input
-            ref={fileInputRef}
-            type="file"
-            id="profile-photo-file-input"
-            accept="image/*"
-            onChange={handlePhotoSelect}
-            className="hidden"
-            aria-label="Upload profile photo"
-          />
-
           {/* Glowing Gradient Border Container */}
-          <div className="w-36 h-36 sm:w-44 sm:h-44 md:w-48 md:h-48 rounded-full p-[3px] bg-gradient-to-tr from-cyan-500 via-blue-500 to-indigo-500 shadow-[0_0_30px_rgba(6,182,212,0.35)] group-hover:shadow-[0_0_45px_rgba(6,182,212,0.55)] transition-all duration-300 group-hover:scale-105">
+          <div className="w-36 h-36 sm:w-44 sm:h-44 md:w-48 md:h-48 rounded-full p-[3px] bg-gradient-to-tr from-cyan-500 via-blue-500 to-indigo-500 shadow-[0_0_30px_rgba(6,182,212,0.35)] transition-all duration-300">
             {/* Inner Dark Rim & Ring */}
             <div className="w-full h-full rounded-full bg-[#0b0f19] p-[2px] flex items-center justify-center overflow-hidden relative ring-1 ring-cyan-400/30">
-              {/* Selected Target Element: Circular Profile Container */}
+              {/* Selected Target Element: Fixed Circular Profile Container */}
               <div className="w-full h-full rounded-full overflow-hidden relative bg-slate-950">
-                {!imageError ? (
-                  <img
-                    id="hero-profile-img"
-                    src={profileImgSrc}
-                    alt={`${personalInfo.name} - Profile Photo`}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full rounded-full object-cover object-[52%_22%] transition-transform duration-500 group-hover:scale-105"
-                    onError={() => {
-                      if (profileImgSrc === '/portfolio.jpeg') {
-                        setProfileImgSrc('portfolio.jpeg');
-                      } else {
-                        setImageError(true);
-                      }
-                    }}
-                  />
-                ) : (
-                  /* Fallback when image source not yet placed on disk */
-                  <div className="w-full h-full rounded-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 flex flex-col items-center justify-center text-slate-100 p-2">
-                    <span className="font-extrabold text-3xl sm:text-4xl tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-400">
-                      KP
-                    </span>
-                    <span className="text-[10px] font-mono text-cyan-300 mt-1 flex items-center gap-1 bg-cyan-950/80 px-2.5 py-0.5 rounded-full border border-cyan-700/50">
-                      <Camera className="w-3 h-3" />
-                      <span>Select Photo</span>
-                    </span>
-                  </div>
-                )}
-
-                {/* Subtle Hover Overlay for Quick Update */}
-                <div
-                  className={`absolute inset-0 rounded-full bg-slate-950/65 backdrop-blur-[2px] flex flex-col items-center justify-center transition-opacity duration-200 ${
-                    isHovered ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                  }`}
-                >
-                  <Camera className="w-6 h-6 text-cyan-300 mb-1 drop-shadow-md" />
-                  <span className="text-[10px] font-mono text-cyan-200 tracking-wider font-semibold">
-                    Change Photo
-                  </span>
-                </div>
+                <img
+                  id="hero-profile-img"
+                  src="/portfolio.jpeg"
+                  alt={`${personalInfo.name} - Profile Photo`}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full rounded-full object-cover object-[52%_22%]"
+                />
               </div>
             </div>
           </div>
 
-          {/* Accent Sparkle Tech Badge */}
+          {/* Decorative Tech Sparkle Accent Badge */}
           <div
-            className="absolute -bottom-1 -right-1 bg-slate-900/95 border border-cyan-500/50 rounded-full p-2 shadow-lg shadow-cyan-950/80 group-hover:border-cyan-400 group-hover:scale-110 transition-all duration-200"
-            title="AI/ML Developer Profile"
+            className="absolute -bottom-1 -right-1 bg-slate-900/95 border border-cyan-500/50 rounded-full p-2 shadow-lg shadow-cyan-950/80 pointer-events-none"
+            aria-hidden="true"
           >
-            <Sparkles className="w-4 h-4 text-cyan-400 animate-pulse" />
+            <Sparkles className="w-4 h-4 text-cyan-400" />
           </div>
         </div>
 
