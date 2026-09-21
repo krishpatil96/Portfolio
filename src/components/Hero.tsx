@@ -11,6 +11,7 @@ import {
   Terminal,
 } from 'lucide-react';
 import { personalInfo, heroCodeSnippets } from '../data/portfolio';
+import portfolioPhoto from '../assets/portfolio.jpeg';
 
 interface HeroProps {
   onOpenResumeModal: () => void;
@@ -52,18 +53,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResumeModal }) => {
       </div>
 
       <div className="max-w-5xl mx-auto w-full flex flex-col items-center text-center">
-        {/* Status Badge */}
-        <div
-          id="hero-status-badge"
-          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-cyan-300 text-xs font-semibold mb-6 shadow-sm shadow-cyan-950/30"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-          </span>
-          <span>{personalInfo.statusBadge}</span>
-        </div>
-
         {/* Profile Avatar with Subtle Tech Glow */}
         <div
           id="hero-profile-avatar-container"
@@ -77,10 +66,16 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResumeModal }) => {
               <div className="w-full h-full rounded-full overflow-hidden relative bg-slate-950">
                 <img
                   id="hero-profile-img"
-                  src="/portfolio.jpeg"
+                  src={portfolioPhoto}
                   alt={`${personalInfo.name} - Profile Photo`}
                   referrerPolicy="no-referrer"
                   className="w-full h-full rounded-full object-cover object-[52%_22%]"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (target.src !== window.location.origin + '/portfolio.jpeg') {
+                      target.src = '/portfolio.jpeg';
+                    }
+                  }}
                 />
               </div>
             </div>
