@@ -57,17 +57,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResumeModal }) => {
         <a
           href="#home"
           id="nav-brand-link"
-          className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded-lg p-1"
+          className="flex items-center gap-2.5 sm:gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded-lg p-1"
         >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-base shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform duration-200">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-base shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform duration-200 shrink-0">
             KP
           </div>
-          <div className="flex flex-col">
-            <span className="font-bold text-base tracking-tight text-white group-hover:text-cyan-400 transition-colors">
+          <div className="flex flex-col justify-center min-w-0">
+            <span className="font-bold text-sm sm:text-base tracking-tight text-white group-hover:text-cyan-400 transition-colors leading-tight">
               {personalInfo.name}
             </span>
-            <span className="text-[11px] font-mono text-cyan-400/90 tracking-wide">
-              AI / ML & Full-Stack
+            <span className="text-[10px] sm:text-[11px] font-medium tracking-wide text-cyan-400/80 group-hover:text-cyan-300 transition-colors leading-tight whitespace-nowrap mt-0.5">
+              AI/ML • Full-Stack Developer
             </span>
           </div>
         </a>
