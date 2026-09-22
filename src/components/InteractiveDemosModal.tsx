@@ -459,7 +459,7 @@ const ProgressTrackerDemo: React.FC = () => {
       </div>
 
       <div className="p-2.5 rounded-lg bg-cyan-950/30 border border-cyan-500/20 text-xs text-cyan-200 flex items-center justify-between">
-        <span>Recommended Specialization Pathways:</span>
+        <span>Recommended Focus Pathways:</span>
         <span className="font-bold text-white">AI Research & Systems Engineering</span>
       </div>
     </div>

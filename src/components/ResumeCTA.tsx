@@ -57,14 +57,15 @@ export const ResumeCTA: React.FC<ResumeCTAProps> = ({ onOpenResumeModal }) => {
                 <span>Preview Resume</span>
               </button>
 
-              <button
+              <a
                 id="cta-download-resume-btn"
-                onClick={onOpenResumeModal}
+                href={personalInfo.resumeUrl}
+                download="Krish_Patil_Resume.pdf"
                 className="flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-xs sm:text-sm bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-slate-700 transition-all duration-200 active:scale-95 cursor-pointer"
               >
                 <FileDown className="w-4 h-4 text-cyan-400" />
                 <span>Download Resume (PDF)</span>
-              </button>
+              </a>
 
               <a
                 href="#contact"

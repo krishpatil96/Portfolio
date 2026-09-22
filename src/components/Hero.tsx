@@ -144,14 +144,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResumeModal }) => {
             <ArrowRight className="w-4 h-4" />
           </a>
 
-          <button
+          <a
             id="hero-download-resume-btn"
-            onClick={onOpenResumeModal}
+            href={personalInfo.resumeUrl}
+            download="Krish_Patil_Resume.pdf"
             className="flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm bg-slate-900/90 hover:bg-slate-800 text-slate-100 border border-slate-700/80 shadow-md transition-all duration-200 active:scale-95 cursor-pointer focus:outline-none focus:ring-2 focus:ring-slate-400"
           >
             <FileDown className="w-4 h-4 text-cyan-400" />
             <span>Download Resume</span>
-          </button>
+          </a>
 
           <a
             href="#contact"

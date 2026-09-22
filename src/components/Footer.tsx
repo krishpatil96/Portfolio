@@ -96,7 +96,7 @@ export const Footer: React.FC = () => {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <p>© 2026 Krish Patil. Built with React.</p>
           <div className="flex items-center gap-4 text-[11px] font-mono">
-            <span>Specialization: AI & ML</span>
+            <span>Core Focus: AI & ML</span>
             <span>•</span>
             <span>Pimpri Chinchwad University (SOET)</span>
           </div>

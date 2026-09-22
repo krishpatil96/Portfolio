@@ -31,17 +31,6 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
     window.print();
   };
 
-  const handleDownload = () => {
-    // Generate a downloadable text/markdown or trigger file download
-    const link = document.createElement('a');
-    link.href = personalInfo.resumeUrl;
-    link.download = 'Krish_Patil_Resume.pdf';
-    link.target = '_blank';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <div
       role="dialog"
@@ -70,13 +59,15 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
               <span className="hidden sm:inline">Print / Save as PDF</span>
             </button>
 
-            <button
-              onClick={handleDownload}
+            <a
+              id="modal-header-download-btn"
+              href={personalInfo.resumeUrl}
+              download="Krish_Patil_Resume.pdf"
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500 hover:bg-cyan-400 text-white shadow-sm cursor-pointer"
             >
               <FileDown className="w-3.5 h-3.5" />
               <span>Download PDF</span>
-            </button>
+            </a>
 
             <button
               onClick={onClose}
@@ -99,7 +90,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
               {personalInfo.fullName}
             </h1>
             <p className="text-sm font-semibold text-cyan-400 mt-1 print:text-slate-800">
-              {personalInfo.degree} (Specialization: {personalInfo.specialization})
+              {personalInfo.degree} • Core Focus: {personalInfo.specialization}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-slate-300 mt-2 font-mono print:text-slate-700">
               <span>{personalInfo.location}</span>
@@ -125,7 +116,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                   {educationData.institution} — {educationData.school}
                 </strong>
                 <p className="text-slate-300 print:text-slate-700">
-                  {educationData.degree} in {educationData.specialization}
+                  {educationData.degree} • Core Focus: {educationData.specialization}
                 </p>
                 <p className="text-xs text-slate-400 print:text-slate-600">
                   Coursework: Data Structures, Artificial Intelligence, Machine Learning, DBMS, OS, Networks
@@ -229,12 +220,15 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
           >
             Close
           </button>
-          <button
-            onClick={handleDownload}
-            className="px-5 py-2 rounded-xl text-xs font-semibold bg-cyan-500 hover:bg-cyan-400 text-white transition-colors cursor-pointer"
+          <a
+            id="modal-footer-download-btn"
+            href={personalInfo.resumeUrl}
+            download="Krish_Patil_Resume.pdf"
+            className="px-5 py-2 rounded-xl text-xs font-semibold bg-cyan-500 hover:bg-cyan-400 text-white transition-colors cursor-pointer inline-flex items-center gap-1.5"
           >
-            Download PDF
-          </button>
+            <FileDown className="w-3.5 h-3.5" />
+            <span>Download PDF</span>
+          </a>
         </div>
       </div>
     </div>

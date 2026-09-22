@@ -80,13 +80,7 @@ export const About: React.FC = () => {
                 <span className="text-cyan-400">#</span> Academic & Engineering Foundation
               </h3>
               <p className="text-slate-300 text-base leading-relaxed mb-4">
-                I am a third-year Computer Science Engineering student specializing in{' '}
-                <strong className="text-white font-semibold">
-                  Artificial Intelligence and Machine Learning
-                </strong>{' '}
-                at {personalInfo.college}, {personalInfo.university}. With a{' '}
-                <span className="text-cyan-300 font-semibold">{personalInfo.cgpa} CGPA</span>, I pair deep theoretical
-                rigor with hands-on systems implementation.
+                I am a third-year B.Tech Computer Science Engineering student at the School of Engineering and Technology (SOET), Pimpri Chinchwad University (PCU). With a 9.3 CGPA, I combine strong computer science fundamentals with hands-on experience in software development, Artificial Intelligence, and Machine Learning. AI/ML is my core area of interest, and I am actively exploring and building projects in this field.
               </p>
               <p className="text-slate-300 text-base leading-relaxed mb-4">
                 I enjoy building practical software solutions that seamlessly combine AI models,

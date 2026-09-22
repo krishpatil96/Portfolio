@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Trophy,
   GraduationCap,
@@ -8,11 +8,15 @@ import {
   Sparkles,
   Calendar,
   Building,
-  PlusCircle,
+  Eye,
 } from 'lucide-react';
 import { achievementsData } from '../data/portfolio';
+import { AchievementItem } from '../types/portfolio';
+import { AchievementProofModal } from './AchievementProofModal';
 
 export const Achievements: React.FC = () => {
+  const [selectedAchievement, setSelectedAchievement] = useState<AchievementItem | null>(null);
+
   const getAchievementIcon = (type: string) => {
     switch (type) {
       case 'trophy':
@@ -51,57 +55,74 @@ export const Achievements: React.FC = () => {
 
         {/* Achievements Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {achievementsData.map((ach) => (
-            <div
-              key={ach.id}
-              className="glass-card rounded-2xl p-6 border border-slate-800/80 hover:border-amber-500/40 transition-all duration-300 flex flex-col justify-between group shadow-lg shadow-black/20"
-            >
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-4">
-                  <div className="p-3 rounded-xl bg-slate-800/90 border border-slate-700/60 group-hover:scale-110 transition-transform">
-                    {getAchievementIcon(ach.iconType)}
+          {achievementsData.map((ach) => {
+            const hasProof = Boolean(
+              ach.proofButtonText || ach.proofImage || (ach.proofs && ach.proofs.length > 0)
+            );
+
+            return (
+              <div
+                key={ach.id}
+                id={`achievement-card-${ach.id}`}
+                className="glass-card rounded-2xl p-6 border border-slate-800/80 hover:border-amber-500/40 transition-all duration-300 flex flex-col justify-between group shadow-lg shadow-black/20"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-4">
+                    <div className="p-3 rounded-xl bg-slate-800/90 border border-slate-700/60 group-hover:scale-110 transition-transform">
+                      {getAchievementIcon(ach.iconType)}
+                    </div>
+                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-950/40 border border-amber-500/30 text-amber-300">
+                      {ach.badgeText}
+                    </span>
                   </div>
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-950/40 border border-amber-500/30 text-amber-300">
-                    {ach.badgeText}
-                  </span>
+
+                  <h3 className="text-lg font-bold text-white group-hover:text-amber-300 transition-colors mb-1.5">
+                    {ach.title}
+                  </h3>
+                  <div className="text-xs font-semibold text-cyan-400 mb-1 flex items-center gap-1.5">
+                    <Building className="w-3.5 h-3.5 shrink-0" />
+                    <span>{ach.organization}</span>
+                  </div>
+                  <div className="text-xs text-slate-400 mb-4 flex items-center gap-1.5">
+                    <Calendar className="w-3.5 h-3.5 shrink-0" />
+                    <span>{ach.date}</span>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    {ach.description}
+                  </p>
                 </div>
 
-                <h3 className="text-lg font-bold text-white group-hover:text-amber-300 transition-colors mb-1.5">
-                  {ach.title}
-                </h3>
-                <div className="text-xs font-semibold text-cyan-400 mb-1 flex items-center gap-1.5">
-                  <Building className="w-3.5 h-3.5 shrink-0" />
-                  <span>{ach.organization}</span>
-                </div>
-                <div className="text-xs text-slate-400 mb-4 flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5 shrink-0" />
-                  <span>{ach.date}</span>
-                </div>
+                <div className="pt-4 mt-4 border-t border-slate-800/60 flex items-center justify-between gap-2">
+                  <div className="text-[11px] font-mono text-slate-400 truncate">
+                    Event: <span className="text-slate-300">{ach.event}</span>
+                  </div>
 
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  {ach.description}
-                </p>
+                  {hasProof && (
+                    <button
+                      id={`view-proof-btn-${ach.id}`}
+                      type="button"
+                      onClick={() => setSelectedAchievement(ach)}
+                      className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-cyan-950/60 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/25 hover:border-cyan-400 transition-all cursor-pointer active:scale-95 shadow-sm"
+                      title={ach.proofButtonText || 'View Proof'}
+                    >
+                      <Eye className="w-3.5 h-3.5 text-cyan-400" />
+                      <span>{ach.proofButtonText || 'View Proof'}</span>
+                    </button>
+                  )}
+                </div>
               </div>
-
-              <div className="pt-4 mt-4 border-t border-slate-800/60 text-[11px] font-mono text-slate-400">
-                Event: <span className="text-slate-300">{ach.event}</span>
-              </div>
-            </div>
-          ))}
-
-          {/* Quick-Add Placeholder Card for Developer Extensibility */}
-          <div className="rounded-2xl p-6 border border-dashed border-slate-800 bg-slate-900/30 flex flex-col items-center justify-center text-center hover:border-cyan-500/30 transition-colors">
-            <PlusCircle className="w-8 h-8 text-slate-500 mb-2" />
-            <h4 className="text-sm font-semibold text-slate-300 mb-1">
-              Add More Achievements
-            </h4>
-            <p className="text-xs text-slate-400 max-w-xs">
-              Easily expand this collection by appending new milestone entries into{' '}
-              <code className="text-cyan-400 font-mono">src/data/portfolio.ts</code>.
-            </p>
-          </div>
+            );
+          })}
         </div>
       </div>
+
+      {/* Full-Screen Proof Lightbox Modal */}
+      <AchievementProofModal
+        achievement={selectedAchievement}
+        isOpen={Boolean(selectedAchievement)}
+        onClose={() => setSelectedAchievement(null)}
+      />
     </section>
   );
 };

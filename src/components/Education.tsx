@@ -38,7 +38,7 @@ export const Education: React.FC = () => {
                 {educationData.degree}
               </h3>
               <p className="text-base font-semibold text-cyan-400 mt-1">
-                Specialization: {educationData.specialization}
+                Core Interest & Technical Focus: {educationData.specialization}
               </p>
               <div className="text-sm text-slate-300 mt-1">
                 {educationData.school}, {educationData.institution}

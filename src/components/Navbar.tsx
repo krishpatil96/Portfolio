@@ -95,14 +95,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResumeModal }) => {
 
         {/* Desktop Actions */}
         <div className="hidden sm:flex items-center gap-3">
-          <button
+          <a
             id="nav-resume-btn"
-            onClick={onOpenResumeModal}
+            href={personalInfo.resumeUrl}
+            download="Krish_Patil_Resume.pdf"
             className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-md shadow-cyan-500/20 transition-all duration-200 active:scale-95 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
           >
             <FileDown className="w-4 h-4" />
             <span>Download Resume</span>
-          </button>
+          </a>
         </div>
 
         {/* Mobile Hamburger Button */}
@@ -135,16 +136,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResumeModal }) => {
               </a>
             ))}
             <div className="pt-4 border-t border-slate-800/80 flex flex-col gap-2.5">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenResumeModal();
-                }}
+              <a
+                href={personalInfo.resumeUrl}
+                download="Krish_Patil_Resume.pdf"
+                onClick={() => setMobileMenuOpen(false)}
                 className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/20"
               >
                 <FileDown className="w-4 h-4" />
                 <span>Download Resume</span>
-              </button>
+              </a>
               <a
                 href={personalInfo.github}
                 target="_blank"

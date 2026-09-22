@@ -43,7 +43,7 @@ export const quickStats: StatItem[] = [
   {
     label: 'Academic CGPA',
     value: '9.3',
-    subtext: 'B.Tech CSE (AI/ML Specialization)',
+    subtext: 'B.Tech CSE • AI/ML Core Focus',
     iconName: 'GraduationCap',
   },
   {
@@ -357,13 +357,61 @@ export const achievementsData: AchievementItem[] = [
   {
     id: 'ach-cgpa',
     title: 'Academic Excellence — 9.3 CGPA',
-    event: 'B.Tech in Computer Science Engineering (AI & ML)',
+    event: 'B.Tech in Computer Science Engineering',
     organization: 'Pimpri Chinchwad University (PCU SOET)',
     date: '2023 - 2026',
     iconType: 'academic',
     description:
-      'Consistently maintained a top-tier academic standing with a 9.3 cumulative grade point average across core computer science and AI specialization subjects.',
+      'Consistently maintained a top-tier academic standing with a 9.3 cumulative grade point average across core computer science and AI/ML coursework.',
     badgeText: '🎓 9.3 CGPA',
+  },
+  {
+    id: 'ach-bootcamp',
+    title: 'Official Trainer — Python Bootcamp',
+    event: 'Departmental Faculty & Club Recognition',
+    organization: 'Department of CSE, SOET, PCU',
+    date: '10 September 2026',
+    iconType: 'python',
+    description:
+      'Officially recognized as Trainer for empowering fellow students with Python programming and Flask web fundamentals, receiving formal commendation from university leadership.',
+    badgeText: '🐍 Official Trainer',
+    proofType: 'multiple',
+    proofButtonText: 'View Details',
+    proofs: [
+      {
+        id: 'bootcamp-cert',
+        title: 'Certificate of Appreciation',
+        type: 'certificate',
+        imageUrl: '/achievements/python-bootcamp-certificate.jpeg',
+        fallbackImageUrl: '/achievements/WhatsApp Image 2026-09-21 at 7.00.15 PM (1).jpeg',
+        caption:
+          'Certificate of Appreciation awarded to Krish Patil as Trainer for the Python Bootcamp organized by Department of CSE & Developers Club, PCU SOET.',
+        date: '10 September 2026',
+        issuer: 'Vice Chancellor & Head of Department, PCU SOET',
+      },
+      {
+        id: 'bootcamp-event-gps',
+        title: 'Event Photo — Stage Recognition',
+        type: 'event-photo',
+        imageUrl: '/achievements/python-bootcamp-event-gps.jpeg',
+        fallbackImageUrl: '/achievements/WhatsApp Image 2026-09-21 at 7.00.15 PM (2).jpeg',
+        caption:
+          'Receiving formal commendation and certificate on stage in the PCU SOET Auditorium in front of the Python x Flask session screen.',
+        date: '10 September 2026',
+        issuer: 'PCU Mohitewadi, Pune',
+      },
+      {
+        id: 'bootcamp-event-stage',
+        title: 'Event Photo — Faculty & Peer Commendation',
+        type: 'event-photo',
+        imageUrl: '/achievements/python-bootcamp-event-stage.jpeg',
+        fallbackImageUrl: '/achievements/WhatsApp Image 2026-09-21 at 7.00.15 PM.jpeg',
+        caption:
+          'Trainer commendation on stage alongside faculty mentors and student coordinators during the Python Bootcamp valedictory ceremony.',
+        date: '10 September 2026',
+        issuer: 'Department of CSE, PCU',
+      },
+    ],
   },
   {
     id: 'ach-adobe',
@@ -375,17 +423,10 @@ export const achievementsData: AchievementItem[] = [
     description:
       'Participated in the competitive nationwide Adobe University Hackathon, solving complex algorithmic and engineering challenges under tight time constraints.',
     badgeText: '💻 Adobe Hackathon',
-  },
-  {
-    id: 'ach-bootcamp',
-    title: 'Official Trainer — Python Bootcamp',
-    event: 'Departmental Faculty & Club Recognition',
-    organization: 'Department of CSE, SOET, PCU',
-    date: '10 September 2026',
-    iconType: 'python',
-    description:
-      'Officially recognized as Trainer for empowering fellow students with Python programming and Flask web fundamentals, receiving formal commendation.',
-    badgeText: '🐍 Official Trainer',
+    proofType: 'certificate',
+    proofButtonText: 'View Certificate',
+    proofImage: '/achievements/adobe-hackathon-certificate.jpeg',
+    fallbackProofImage: '/achievements/WhatsApp Image 2026-09-21 at 7.00.15 PM (3).jpeg',
   },
   {
     id: 'ach-tata-crucible',
@@ -397,6 +438,10 @@ export const achievementsData: AchievementItem[] = [
     description:
       'Demonstrated enthusiasm and high aptitude in business, technology, and general awareness during the national-level Tata Crucible Campus Quiz.',
     badgeText: '🧠 National Quiz',
+    proofType: 'certificate',
+    proofButtonText: 'View Certificate',
+    proofImage: '/achievements/tata-crucible-certificate.jpeg',
+    fallbackProofImage: '/achievements/WhatsApp Image 2026-09-21 at 7.00.16 PM (2).jpeg',
   },
   {
     id: 'ach-anantam',
@@ -408,6 +453,70 @@ export const achievementsData: AchievementItem[] = [
     description:
       'Awarded university trophy and formal Certificate of Appreciation for exemplary leadership and off-stage event coordination during Anantam 2026.',
     badgeText: '🌟 Coordinator Trophy',
+    proofType: 'achievement',
+    proofButtonText: 'View Achievement',
+    proofImage: '/achievements/anantam-fest-award-proof.jpeg',
+    fallbackProofImage: '/achievements/WhatsApp Image 2026-09-21 at 7.00.18 PM.jpeg',
+  },
+  {
+    id: 'ach-prompt-eng',
+    title: 'Prompt Engineering Workshop',
+    event: 'Advanced Generative AI & Prompting Intensive',
+    organization: 'Department of CSE & Developers Club, PCU',
+    date: '22 August 2026',
+    iconType: 'code',
+    description:
+      'Participated in the comprehensive Prompt Engineering Workshop exploring structured prompting heuristics, system prompt design, and AI model orchestration.',
+    badgeText: '🤖 Prompt Eng',
+    proofType: 'certificate',
+    proofButtonText: 'View Certificate',
+    proofImage: '/achievements/prompt-engineering-certificate.jpeg',
+    fallbackProofImage: '/achievements/WhatsApp Image 2026-09-21 at 7.00.16 PM.jpeg',
+  },
+  {
+    id: 'ach-vibeinity',
+    title: 'Vibeinity: AI-Powered Coding Experience',
+    event: 'Technical Hackathon & Interactive Coding Meet',
+    organization: 'PCU Developers Club & CSE Department',
+    date: '11th & 12th November 2025',
+    iconType: 'code',
+    description:
+      'Engaged in a 2-day technical intensive centered around AI-augmented programming, developer tooling, and collaborative software design.',
+    badgeText: '⚡ AI Coding',
+    proofType: 'certificate',
+    proofButtonText: 'View Certificate',
+    proofImage: '/achievements/vibeinity-ai-coding-certificate.jpeg',
+    fallbackProofImage: '/achievements/WhatsApp Image 2026-09-21 at 7.00.18 PM (3).jpeg',
+  },
+  {
+    id: 'ach-ai-impact',
+    title: 'Mission Upskill India — AI Impact Summit 2026',
+    event: 'Pre-Summit National Upskilling Initiative',
+    organization: 'GUVI HCL, Digital India & INDIAai',
+    date: '22 December 2025',
+    iconType: 'academic',
+    description:
+      'Awarded Certificate of Participation for the national Mission Upskill India pre-summit event aligned with Digital India and INDIAai initiatives.',
+    badgeText: '🇮🇳 INDIAai Summit',
+    proofType: 'certificate',
+    proofButtonText: 'View Certificate',
+    proofImage: '/achievements/ai-impact-summit-certificate.jpeg',
+    fallbackProofImage: '/achievements/WhatsApp Image 2026-09-21 at 7.00.18 PM (2).jpeg',
+  },
+  {
+    id: 'ach-guvi-fullstack',
+    title: 'The Future of Full Stack Development in 2026',
+    event: 'Key Skills Needed for Modern Web Architecture',
+    organization: 'GUVI & HCL',
+    date: '09 May 2026',
+    iconType: 'code',
+    description:
+      'Recognized for participation in the technical masterclass exploring next-generation full-stack architectures, modern JavaScript ecosystems, and cloud readiness.',
+    badgeText: '🌐 Full-Stack',
+    proofType: 'certificate',
+    proofButtonText: 'View Certificate',
+    proofImage: '/achievements/guvi-fullstack-certificate.jpeg',
+    fallbackProofImage: '/achievements/WhatsApp Image 2026-09-21 at 7.00.16 PM (3).jpeg',
   },
 ];
 
@@ -540,8 +649,8 @@ export const certificationsData: CertificationItem[] = [
 export const educationData: EducationItem = {
   institution: 'Pimpri Chinchwad University (PCU)',
   school: 'School of Engineering and Technology (SOET)',
-  degree: 'Bachelor of Technology (B.Tech)',
-  specialization: 'Computer Science and Engineering (Artificial Intelligence & Machine Learning)',
+  degree: 'B.Tech in Computer Science Engineering',
+  specialization: 'Artificial Intelligence & Machine Learning',
   currentYear: '3rd Year (Class of 2027)',
   cgpa: '9.3 / 10.0',
   location: 'Mohitewadi, Pune, Maharashtra, India',

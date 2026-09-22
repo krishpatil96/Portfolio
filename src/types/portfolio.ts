@@ -65,6 +65,21 @@ export interface ExperienceItem {
   hasVerificationBadge?: boolean;
 }
 
+export type ProofType = 'certificate' | 'achievement' | 'event-photo' | 'multiple';
+
+export interface ProofItem {
+  id: string;
+  title: string;
+  type: 'certificate' | 'achievement' | 'event-photo';
+  imageUrl: string;
+  fallbackImageUrl?: string;
+  caption?: string;
+  date?: string;
+  issuer?: string;
+  credentialId?: string;
+  verificationUrl?: string;
+}
+
 export interface AchievementItem {
   id: string;
   title: string;
@@ -74,6 +89,11 @@ export interface AchievementItem {
   iconType: 'trophy' | 'academic' | 'code' | 'python' | 'quiz' | 'award';
   description: string;
   badgeText: string;
+  proofType?: ProofType;
+  proofButtonText?: 'View Certificate' | 'View Achievement' | 'View Event Photo' | 'View Details';
+  proofImage?: string;
+  fallbackProofImage?: string;
+  proofs?: ProofItem[];
 }
 
 export interface ResearchInterest {
